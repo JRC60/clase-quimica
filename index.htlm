@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AR Química - Orbitales</title>
+    <!-- Librerías de A-Frame y AR.js -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <!-- Escena de Realidad Aumentada -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        
+        <!-- Marcador Hiro -->
+        <a-marker preset="hiro">
+            <!-- El objeto 3D: Escala 5, posición casi pegada al marcador y estático -->
+            <a-entity id="objeto-3d"
+                      position="0 0.1 0" 
+                      scale="5 5 5"
+                      gltf-model="">
+            </a-entity>
+
+            <!-- Referencia visual roja por si el archivo .glb no carga -->
+            <a-sphere position="0 0 0" radius="0.05" color="#FF0000"></a-sphere>
+        </a-marker>
+
+        <!-- Cámara del dispositivo -->
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // Lógica para leer el nombre del modelo desde el link (?tipo=nombre)
+        const urlParams = new URLSearchParams(window.location.search);
+        const tipo = urlParams.get('tipo'); 
+        
+        if (tipo) {
+            const el = document.querySelector('#objeto-3d');
+            // Carga el archivo desde la carpeta 'modelos'
+            el.setAttribute('gltf-model', `./modelos/${tipo}.glb`);
+        }
+    </script>
+</body>
+</html>
